@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "node dist/index.js",
     "lint": "eslint . --ext .ts",
     "test": "jest"
@@ -26,6 +26,8 @@
     "@types/node": "^25.5.0",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^6.0.2"
   }
 }
