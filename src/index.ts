@@ -8,7 +8,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 
-export const lmdb = createConnection();
+export const lmdbConnection = createConnection();
 
 // Middleware
 app.use(express.json());
