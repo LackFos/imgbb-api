@@ -11,9 +11,9 @@ export function getFile(
   res: Response,
 ) {
   try {
-    const { slug } = req.params;
+    const { path } = req.params;
 
-    const file = lmdbService(lmdbConnection).get(slug);
+    const file = lmdbService(lmdbConnection).get(path);
 
     if (!file) {
       return ReturnResponse.NotFound({
@@ -21,6 +21,8 @@ export function getFile(
         message: "File not found",
       });
     }
+
+    res.setHeader("X-Actual-URL", file?.image?.url || "");
 
     return ReturnResponse.Success({
       response: res,

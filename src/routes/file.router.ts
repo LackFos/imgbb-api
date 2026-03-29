@@ -8,7 +8,7 @@ import { fileUploadRequestBodyDTO } from "@/schemas/requests/files/file-upload-r
 export const fileRouter = Router();
 
 fileRouter.get(
-  "/:slug",
+  "/:path",
   zodValidator(fileGetRequestParamDTO, "params"),
   getFile,
 );
