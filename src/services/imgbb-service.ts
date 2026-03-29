@@ -6,44 +6,46 @@ export const imgbbService = {
 };
 
 interface ImgBBResponse {
-  data: {
-    id: string;
-    title: string;
-    url_viewer: string;
-    url: string;
-    display_url: string;
-    width: string;
-    height: string;
-    size: string;
-    time: string;
-    expiration: string;
-    image: {
-      filename: string;
-      name: string;
-      mime: string;
-      extension: string;
-      url: string;
-    };
-    thumb: {
-      filename: string;
-      name: string;
-      mime: string;
-      extension: string;
-      url: string;
-    };
-    medium: {
-      filename: string;
-      name: string;
-      mime: string;
-      extension: string;
-      url: string;
-    };
-    delete_url: string;
-    success: boolean;
-    status: number;
-    message: string;
-  };
+  data: StoredImage;
 }
+
+export type StoredImage = {
+  id: string;
+  title: string;
+  url_viewer: string;
+  url: string;
+  display_url: string;
+  width: string;
+  height: string;
+  size: string;
+  time: string;
+  expiration: string;
+  image: {
+    filename: string;
+    name: string;
+    mime: string;
+    extension: string;
+    url: string;
+  };
+  thumb: {
+    filename: string;
+    name: string;
+    mime: string;
+    extension: string;
+    url: string;
+  };
+  medium: {
+    filename: string;
+    name: string;
+    mime: string;
+    extension: string;
+    url: string;
+  };
+  delete_url: string;
+  success: boolean;
+  status: number;
+  message: string;
+};
 
 async function uploadImage(file: MulterFile): Promise<ImgBBResponse> {
   const apiKey = process.env.IMGBB_API_KEY;

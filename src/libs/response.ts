@@ -3,6 +3,7 @@ import type { Response } from "express";
 const STATUS_CODE = {
   SUCCESS: 200,
   CREATED: 201,
+  NOT_FOUND: 404,
   INTERNAL_SERVER_ERROR: 500,
 };
 
@@ -27,6 +28,13 @@ export const ReturnResponse = {
       success: true,
       message,
       data,
+    });
+  },
+
+  NotFound: ({ response, message }: ResponseProps) => {
+    return response.status(STATUS_CODE.NOT_FOUND).json({
+      success: false,
+      message,
     });
   },
 

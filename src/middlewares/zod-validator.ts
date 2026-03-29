@@ -1,10 +1,13 @@
 import type { z } from "zod";
 import type { NextFunction, Request, Response } from "express";
 
-export function zodValidator(schema: z.ZodType) {
+export function zodValidator(
+  schema: z.ZodType,
+  type: "body" | "query" | "params",
+) {
   return (req: Request, res: Response, next: NextFunction) => {
     populateFileToRequestBody(req);
-    schema.parse(req.body);
+    schema.parse(req[type]);
     next();
   };
 }
