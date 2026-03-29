@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const MulterFileSchema = (message = "The file field is required") =>
+export const multerFileDTO = (message = "The file field is required") =>
   z.object(
     {
       fieldname: z.string(),
@@ -13,4 +13,4 @@ export const MulterFileSchema = (message = "The file field is required") =>
     message,
   );
 
-export type MulterFile = z.infer<ReturnType<typeof MulterFileSchema>>;
+export type MulterFileDTO = z.infer<ReturnType<typeof multerFileDTO>>;

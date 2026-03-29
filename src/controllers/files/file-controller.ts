@@ -1,20 +1,19 @@
+import type { FileUploadRequestBodyDTO } from "./../../schemas/requests/files/file-upload-request-body-dto";
 import { lmdbConnection } from "@/index";
 import { ReturnResponse } from "@/libs/response";
-import type { FileUploadDTO } from "@/schemas/requests/files/file-upload-request";
-import type { StoredImage } from "@/services/imgbb-service";
 import { imgbbService } from "@/services/imgbb-service";
 import type { Request, Response } from "express";
 import { lmdbService } from "@/services/lmdb-service";
-import type { FileGetDTO } from "@/schemas/requests/files/file-get-request";
+import type { FileGetRequestParamDTO } from "@/schemas/requests/files/file-get-request-param-dto";
 
 export function getFile(
-  req: Request<FileGetDTO, unknown, unknown>,
+  req: Request<FileGetRequestParamDTO, unknown, unknown>,
   res: Response,
 ) {
   try {
     const { slug } = req.params;
 
-    const file = lmdbService(lmdbConnection).get<StoredImage>(slug);
+    const file = lmdbService(lmdbConnection).get(slug);
 
     if (!file) {
       return ReturnResponse.NotFound({
@@ -33,7 +32,7 @@ export function getFile(
 }
 
 export async function uploadFile(
-  req: Request<Record<string, string>, unknown, FileUploadDTO>,
+  req: Request<Record<string, string>, unknown, FileUploadRequestBodyDTO>,
   res: Response,
 ) {
   try {
@@ -45,7 +44,7 @@ export async function uploadFile(
     return ReturnResponse.Created({
       response: res,
       message: "Image uploaded successfully",
-      data: storedImage.data,
+      data: storedImage,
     });
   } catch (error) {
     return ReturnResponse.InternalServerError({ response: res, error });

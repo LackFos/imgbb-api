@@ -1,53 +1,19 @@
-import type { MulterFile } from "@/schemas/multer-file-schema";
+import type { MulterFileDTO } from "@/schemas/multer-file-dto";
+import {
+  storedImageDTO,
+  type StoredImageDTO,
+} from "@/schemas/stored-image-dto";
 import axios from "axios";
 
 export const imgbbService = {
   uploadImage,
 };
 
-interface ImgBBResponse {
-  data: StoredImage;
+interface ImgbbUploadResponse {
+  data: StoredImageDTO;
 }
 
-export type StoredImage = {
-  id: string;
-  title: string;
-  url_viewer: string;
-  url: string;
-  display_url: string;
-  width: string;
-  height: string;
-  size: string;
-  time: string;
-  expiration: string;
-  image: {
-    filename: string;
-    name: string;
-    mime: string;
-    extension: string;
-    url: string;
-  };
-  thumb: {
-    filename: string;
-    name: string;
-    mime: string;
-    extension: string;
-    url: string;
-  };
-  medium: {
-    filename: string;
-    name: string;
-    mime: string;
-    extension: string;
-    url: string;
-  };
-  delete_url: string;
-  success: boolean;
-  status: number;
-  message: string;
-};
-
-async function uploadImage(file: MulterFile): Promise<ImgBBResponse> {
+async function uploadImage(file: MulterFileDTO): Promise<StoredImageDTO> {
   const apiKey = process.env.IMGBB_API_KEY;
 
   const formData = new FormData();
@@ -56,10 +22,10 @@ async function uploadImage(file: MulterFile): Promise<ImgBBResponse> {
 
   formData.append("image", blob, file.originalname);
 
-  const response = await axios.post<ImgBBResponse>(
+  const response = await axios.post<{ data: ImgbbUploadResponse }>(
     `https://api.imgbb.com/1/upload?key=${apiKey}`,
     formData,
   );
 
-  return response.data;
+  return storedImageDTO.parse(response.data.data);
 }

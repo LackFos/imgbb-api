@@ -1,7 +1,11 @@
+import {
+  storedImageDTO,
+  type StoredImageDTO,
+} from "@/schemas/stored-image-dto";
 import type lmdb from "lmdb";
 
 export const lmdbService = (db: lmdb.RootDatabase) => {
-  function put<T>(slug: string, value: T): boolean {
+  function put(slug: string, value: StoredImageDTO): boolean {
     const existingData = db.get(slug);
 
     if (existingData) return existingData;
@@ -11,12 +15,12 @@ export const lmdbService = (db: lmdb.RootDatabase) => {
     return true;
   }
 
-  function get<T>(slug: string): T | null {
+  function get(slug: string): StoredImageDTO | null {
     const data = db.get(slug);
 
     if (!data) return null;
 
-    return data;
+    return storedImageDTO.parse(data);
   }
 
   return { put, get };
