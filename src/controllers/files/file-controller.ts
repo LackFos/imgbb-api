@@ -1,4 +1,4 @@
-import type { FileUploadRequestBodyDTO } from "./../../schemas/requests/files/file-upload-request-body-dto";
+import type { FileUploadRequestBodyDTO } from "@/schemas/requests/files/file-upload-request-body-dto";
 import { lmdbConnection } from "@/index";
 import { ReturnResponse } from "@/libs/response";
 import { imgbbService } from "@/services/imgbb-service";
